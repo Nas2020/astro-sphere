@@ -203,41 +203,41 @@
 </style>
 
 <script>
-  // Conditionally enhance/reduce twinkling effects based on performance settings
-  document.addEventListener('DOMContentLoaded', adjustTwinklingEffects);
-  document.addEventListener('astro:after-swap', adjustTwinklingEffects);
+  // First, declare the type for the performanceSettings
+  interface PerformanceSettings {
+    hasReducedMotion: boolean;
+    deviceTier: 'low' | 'medium' | 'high';
+    isLowPowerMode: boolean;
+  }
 
-  function adjustTwinklingEffects() {
-    // Wait for performance settings to be available
-    if (!window.performanceSettings) return;
-
-    const stars = document.querySelectorAll('.star');
-    if (!stars.length) return;
-
-    // Apply device-specific optimizations
-    if (window.performanceSettings.hasReducedMotion || 
-        window.performanceSettings.deviceTier === 'low' ||
-        window.performanceSettings.isLowPowerMode) {
-      
-      // For reduced motion or low-end devices, show fewer stars with simpler animations
-      stars.forEach((star, index) => {
-        if (index > 4) { // Only show 5 stars
-          star.style.display = 'none';
-        } else {
-          // Simplify the animation by removing pseudo-elements
-          star.style.setProperty('--before-opacity', '0');
-          star.style.setProperty('--after-opacity', '0');
-          // Make the animation less intensive
-          star.style.animationDuration = '3s';
-        }
-      });
-    } else if (window.performanceSettings.deviceTier === 'medium') {
-      // For medium devices, show a moderate number of stars
-      stars.forEach((star, index) => {
-        if (index > 8) { // Show 9 stars for medium devices
-          star.style.display = 'none';
-        }
-      });
+  // Extend the Window interface to include performanceSettings
+  declare global {
+    interface Window {
+      performanceSettings: PerformanceSettings;
     }
   }
+
+  // Your existing code, but with proper type assertions
+  const initializeStars = () => {
+    if (!window.performanceSettings) return;
+    
+    const stars = document.querySelectorAll('.twinkling-star');
+    
+    stars.forEach((star) => {
+      if (window.performanceSettings.hasReducedMotion ||
+          window.performanceSettings.deviceTier === 'low' ||
+          window.performanceSettings.isLowPowerMode) {
+        // Type assertion for HTMLElement
+        (star as HTMLElement).style.display = 'none';
+      } else if (window.performanceSettings.deviceTier === 'medium') {
+        // Type assertions for HTMLElement
+        (star as HTMLElement).style.setProperty('--before-opacity', '0');
+        (star as HTMLElement).style.setProperty('--after-opacity', '0');
+        (star as HTMLElement).style.animationDuration = '3s';
+      }
+    });
+  };
+
+  // Run your initialization
+  document.addEventListener('DOMContentLoaded', initializeStars);
 </script>

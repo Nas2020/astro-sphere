@@ -184,38 +184,39 @@
 </style>
 
 <script>
-  // Conditionally enhance/reduce meteor effects based on performance settings
-  document.addEventListener('DOMContentLoaded', adjustMeteorEffects);
-  document.addEventListener('astro:after-swap', adjustMeteorEffects);
+  // First, declare the type for the performanceSettings
+  interface PerformanceSettings {
+    hasReducedMotion: boolean;
+    deviceTier: 'low' | 'medium' | 'high';
+    isLowPowerMode: boolean;
+  }
 
-  function adjustMeteorEffects() {
-    // Wait for performance settings to be available
-    if (!window.performanceSettings) return;
-
-    const meteors = document.querySelectorAll('.meteor');
-    if (!meteors.length) return;
-
-    // Apply device-specific optimizations
-    if (window.performanceSettings.hasReducedMotion || 
-        window.performanceSettings.deviceTier === 'low' ||
-        window.performanceSettings.isLowPowerMode) {
-      
-      // For reduced motion or low-end devices, only show a few meteors
-      meteors.forEach((meteor, index) => {
-        if (index > 1) { // Only show the first two meteors
-          meteor.style.display = 'none';
-        } else {
-          // Make the animation less intensive
-          meteor.style.animationDuration = '6s';
-        }
-      });
-    } else if (window.performanceSettings.deviceTier === 'medium') {
-      // For medium devices, show a moderate number of meteors
-      meteors.forEach((meteor, index) => {
-        if (index > 5) { // Show 6 meteors for medium devices
-          meteor.style.display = 'none';
-        }
-      });
+  // Extend the Window interface to include performanceSettings
+  declare global {
+    interface Window {
+      performanceSettings: PerformanceSettings;
     }
   }
+
+  // Your existing code, but with proper type assertions
+  const initializeMeteors = () => {
+    if (!window.performanceSettings) return;
+    
+    const meteors = document.querySelectorAll('.meteor');
+    
+    meteors.forEach((meteor) => {
+      if (window.performanceSettings.hasReducedMotion ||
+          window.performanceSettings.deviceTier === 'low' ||
+          window.performanceSettings.isLowPowerMode) {
+        // Type assertion for HTMLElement
+        (meteor as HTMLElement).style.display = 'none';
+      } else if (window.performanceSettings.deviceTier === 'medium') {
+        // Type assertion for HTMLElement
+        (meteor as HTMLElement).style.animationDuration = '6s';
+      } 
+    });
+  };
+
+  // Run your initialization
+  document.addEventListener('DOMContentLoaded', initializeMeteors);
 </script>
