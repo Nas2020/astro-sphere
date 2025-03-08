@@ -15,7 +15,7 @@ export const PROJECTS: Page = {
 
 // About Page 
 export const ABOUT: Page = {
-  TITLE: "About",
+  TITLE: "About Us",
   DESCRIPTION: "About us",
 }
 

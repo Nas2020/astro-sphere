@@ -5,6 +5,7 @@ import ArrowCard from "@components/ArrowCard"
 import { SITE } from "@consts"
 import TwinklingStars from "@components/TwinklingStars.astro"
 import MeteorShower from "@components/MeteorShower.astro"
+import AboutContent from "./about/index.astro"
 const projects = (await getCollection("projects"))
 .filter(project => !project.data.draft)
 .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -118,22 +119,12 @@ All projects
 
 <!-- About Section -->
 <section class="animate">
-<h2 class="font-semibold text-lg text-black dark:text-white pb-2 border-b border-black/10 dark:border-white/10 mb-4">
-About Us
-</h2>
-<article class="prose prose-sm md:prose-base dark:prose-invert max-w-none">
-<p>We are <b><i>AI developers</i></b>, <b><i>solution architects</i></b>, <b><i>machine learning engineers</i></b>, <b><i>UX designers</i></b>, <b><i>data scientists</i></b>, <b><i>innovators</i></b>, <b><i>problem solvers</i></b>, and <b><i>technology enthusiasts</i></b>.</p>
-
-<p>At LimogiAI, we combine cutting-edge AI technologies with thoughtful design to create intelligent solutions that transform how businesses operate. Our expertise spans natural language processing, computer vision, predictive analytics, and conversational AI.</p>
-
-<h3 class="font-medium text-black dark:text-white">Our approach</h3>
-
-<p>We believe AI should augment human capabilities, not replace them. We develop applications that empower people to work more efficiently, make better decisions, and focus on what truly matters.</p>
-
-<h3 class="font-medium text-black dark:text-white">Current focus</h3>
-
-<p>We're currently partnering with forward-thinking organizations to implement custom AI solutions that deliver measurable business value while maintaining the highest standards of ethics and responsibility.</p>
-</article>
+  <h2 class="font-semibold text-xl md:text-2xl text-black dark:text-white pb-2 border-b border-black/10 dark:border-white/10 mb-4">
+    About Us
+  </h2>
+  
+  <!-- Include the full content from the about page -->
+  <AboutContent isHomePage={true} />
 </section>
 </div>
 </div>
