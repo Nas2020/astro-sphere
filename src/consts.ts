@@ -2,21 +2,9 @@ import type { Site, Page, Links, Socials } from "@types"
 
 // Global
 export const SITE: Site = {
-  TITLE: "Astro Sphere",
-  DESCRIPTION: "Welcome to Astro Sphere, a portfolio and blog for designers and developers.",
-  AUTHOR: "Mark Horn",
-}
-
-// Work Page
-export const WORK: Page = {
-  TITLE: "Work",
-  DESCRIPTION: "Places I have worked.",
-}
-
-// Blog Page
-export const BLOG: Page = {
-  TITLE: "Blog",
-  DESCRIPTION: "Writing on topics I am passionate about.",
+  TITLE: "LimogiAI Solutions Inc",
+  DESCRIPTION: "AI Excellence, Limitless Possibilities.",
+  AUTHOR: "LimogiAI Solutions Inc",
 }
 
 // Projects Page 
@@ -25,53 +13,45 @@ export const PROJECTS: Page = {
   DESCRIPTION: "Recent projects I have worked on.",
 }
 
-// Search Page
-export const SEARCH: Page = {
-  TITLE: "Search",
-  DESCRIPTION: "Search all posts and projects by keyword.",
+// About Page 
+export const ABOUT: Page = {
+  TITLE: "About",
+  DESCRIPTION: "About us",
 }
 
 // Links
 export const LINKS: Links = [
-  { 
-    TEXT: "Home", 
-    HREF: "/", 
+  {
+    TEXT: "Projects",
+    HREF: "/projects",
   },
-  { 
-    TEXT: "Work", 
-    HREF: "/work", 
-  },
-  { 
-    TEXT: "Blog", 
-    HREF: "/blog", 
-  },
-  { 
-    TEXT: "Projects", 
-    HREF: "/projects", 
+  {
+    TEXT: "About",
+    HREF: "/about",
   },
 ]
 
 // Socials
 export const SOCIALS: Socials = [
-  { 
+  {
     NAME: "Email",
-    ICON: "email", 
-    TEXT: "markhorn.dev@gmail.com",
-    HREF: "mailto:markhorn.dev@gmail.com",
+    ICON: "email",
+    TEXT: "admin@limogi.ai",
+    HREF: "mailto:admin@limogi.ai",
   },
-  { 
+  {
     NAME: "Github",
     ICON: "github",
-    TEXT: "markhorn-dev",
-    HREF: "https://github.com/markhorn-dev/astro-sphere"
+    TEXT: "limogi-ai",
+    HREF: "https://github.com/LimogiAI"
   },
-  { 
+  {
     NAME: "LinkedIn",
     ICON: "linkedin",
     TEXT: "markhorn-dev",
     HREF: "https://www.linkedin.com/in/markhorn-dev/",
   },
-  { 
+  {
     NAME: "Twitter",
     ICON: "twitter-x",
     TEXT: "markhorn_dev",

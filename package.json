@@ -1,5 +1,5 @@
 {
-  "name": "astro-sphere",
+  "name": "limogiai-solutions",
   "type": "module",
   "version": "1.0.0",
   "scripts": {
@@ -8,6 +8,7 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
+    "disbale:devtoolbar" : "astro preferences disable devToolbar",
     "preview:network": "astro dev --host",
     "astro": "astro",
     "lint": "eslint .",
