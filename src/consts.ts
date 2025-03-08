@@ -2,7 +2,7 @@ import type { Site, Page, Links, Socials } from "@types"
 
 // Global
 export const SITE: Site = {
-  TITLE: "LimogiAI Solutions Inc",
+  TITLE: "LimogiAI",
   DESCRIPTION: "AI Excellence, Limitless Possibilities.",
   AUTHOR: "LimogiAI Solutions Inc",
 }
@@ -48,14 +48,8 @@ export const SOCIALS: Socials = [
   {
     NAME: "LinkedIn",
     ICON: "linkedin",
-    TEXT: "markhorn-dev",
-    HREF: "https://www.linkedin.com/in/markhorn-dev/",
-  },
-  {
-    NAME: "Twitter",
-    ICON: "twitter-x",
-    TEXT: "markhorn_dev",
-    HREF: "https://twitter.com/markhorn_dev",
-  },
+    TEXT: "LimogiAI Solutions Inc",
+    HREF: "https://www.linkedin.com/company/limogiai-solutions-inc",
+  }
 ]
 
