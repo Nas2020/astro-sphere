@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         "sans": ["Atkinson", ...defaultTheme.fontFamily.sans],
+        orbitron: ["Orbitron", "sans-serif"],
       },
       typography: {
         DEFAULT: {

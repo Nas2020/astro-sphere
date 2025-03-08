@@ -1,0 +1,238 @@
+---
+import { SITE } from "@consts";
+import TwinklingStars from "@components/TwinklingStars.astro";
+import MeteorShower from "@components/MeteorShower.astro";
+import LightTwinklingStars from "@components/LightTwinklingStars.astro";
+import LightMeteorShower from "@components/LightMeteorShower.astro";
+
+// Props (optional, with defaults from SITE)
+export interface Props {
+title?: string                               ;
+subtitle?: string                            ;
+tagline?: string                             ;
+}
+
+const {
+title = SITE.TITLE || "LimogiAI",
+subtitle = "Empowering Intelligent Innovation",
+tagline = "Transforming challenges into opportunities with ethical, cutting-edge AI solutions.",
+} = Astro.props                                                                                  ;
+---
+
+<section class="relative h-screen w-full overflow-hidden">
+<!-- Background Effects -->
+
+<div class="absolute inset-0 block dark:hidden">
+<div class="fixed inset-0 bg-gradient-to-br from-blue-100 via-white to-purple-100 animate-gradient-shift"></div>
+<LightTwinklingStars />
+<LightMeteorShower />
+</div>
+
+<!-- Dark Mode: Cosmic Background -->
+<div class="absolute inset-0 hidden dark:block bg-black">
+<div class="fixed inset-0 bg-gradient-to-br from-gray-900 via-black to-purple-950 animate-gradient-shift"></div>
+<TwinklingStars />
+<MeteorShower />
+</div>
+
+<!-- 3D Planet Container -->
+<div id="planetcont" class="animate absolute inset-0 top-1/4 overflow-hidden" data-parallax>
+<canvas id="globe" class="w-full h-full"></canvas>
+</div>
+
+<!-- Hero Content -->
+<div class="relative h-full w-full flex items-center justify-center">
+<div class="p-5 text-center max-w-3xl z-10">
+<p class="text-lg md:text-xl lg:text-2xl font-semibold opacity-75 mb-2 animate-fade-in">
+{subtitle}
+</p>
+<h1 class="text-3xl md:text-5xl lg:text-6xl font-bold normal-case text-black dark:text-white mb-4 animate-slide-up font-orbitron">
+{title}
+</h1>
+<p class="text-sm md:text-base lg:text-lg opacity-75 mb-8 animate-fade-in-delay">
+{tagline}
+</p>
+
+</div>
+</div>
+
+<!-- Scroll Down Arrow -->
+<div class="absolute bottom-16 left-1/2 -translate-x-1/2">
+<button
+class="flex items-center justify-center h-10 w-10 rounded-full bg-black/10 dark:bg-white/10 backdrop-blur-sm hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300"
+aria-label="Scroll down"
+onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})"
+>
+<svg
+class="w-5 h-5 stroke-black dark:stroke-white animate-pulse-down"
+viewBox="0 0 24 24"
+fill="none"
+stroke-width="2"
+stroke-linecap="round"
+stroke-linejoin="round"
+>
+<polyline points="6 9 12 15 18 9"></polyline>
+</svg>
+</button>
+</div>
+
+<!-- Inline Styles -->
+<style>
+@keyframes fade-in {
+from {
+opacity: 0                  ;
+transform: translateY(20px) ;
+}
+to {
+opacity: 1                  ;
+transform: translateY(0)    ;
+}
+}
+
+@keyframes slide-up {
+from {
+opacity: 0                  ;
+transform: translateY(40px) ;
+}
+to {
+opacity: 1                  ;
+transform: translateY(0)    ;
+}
+}
+
+@keyframes gradient-shift {
+0% {
+background-position: 0% 50%   ;
+}
+50% {
+background-position: 100% 50% ;
+}
+100% {
+background-position: 0% 50%   ;
+}
+}
+
+@keyframes pulse-down {
+0%, 100% {
+transform: translateY(0)   ;
+opacity: 1                 ;
+}
+50% {
+transform: translateY(6px) ;
+opacity: 0.7               ;
+}
+}
+
+.animate-fade-in {
+animation: fade-in 1s ease-out forwards ;
+}
+
+.animate-fade-in-delay {
+animation: fade-in 1s ease-out 0.5s forwards ;
+opacity: 0                                   ;
+}
+
+.animate-slide-up {
+animation: slide-up 1s ease-out forwards ;
+}
+
+.animate-gradient-shift {
+background-size: 200% 200%                  ;
+animation: gradient-shift 15s ease infinite ;
+}
+
+.animate-pulse-down {
+animation: pulse-down 2s ease-in-out infinite ;
+}
+
+[data-parallax] {
+transition: transform 0.1s ease-out ;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+#globe {
+transform: scale(0.5)       ;
+}
+}
+</style>
+
+<!-- Inline Script for Parallax and Three.js Globe -->
+<script>
+import * as THREE from "three";
+
+// Parallax Effect
+document.addEventListener("mousemove", (e) => {
+const planetCont = document.querySelector("[data-parallax]") as HTMLElement | null ;
+if (planetCont) {
+const x = (e.clientX / window.innerWidth - 0.5) * 20                               ;
+const y = (e.clientY / window.innerHeight - 0.5) * 20                              ;
+planetCont.style.transform = `translate(${x}px, ${y}px)`                           ;
+}
+})                                                                                 ;
+
+// Three.js Globe
+const scene = new THREE.Scene()                                                                  ;
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100) ;
+
+const canvas = document.getElementById("globe") as HTMLCanvasElement | null;
+if (!canvas) {
+  throw new Error("Canvas element with id 'globe' not found.");
+}const renderer = new THREE.WebGLRenderer({
+canvas,
+alpha: true
+})                                                                                               ;
+renderer.setSize(window.innerWidth, window.innerHeight)                                          ;
+
+const geometry = new THREE.SphereGeometry(5, 32, 32)                         ;
+const isDarkMode = document.documentElement.classList.contains("dark");
+const material = new THREE.MeshPhongMaterial({
+color: isDarkMode ? 0x9b5de5 : 0x9b5de5,
+wireframe: true,
+shininess: 100,
+emissive: isDarkMode ? 0x9b5de5 : 0x9b5de5,
+emissiveIntensity: 0.1, // Lower emissive intensity for a dimmer effect
+transparent: true, // Enable transparency
+opacity: isDarkMode ? 0.3 : 0.05, // Set opacity for a semi-transparent view
+})                                                                           ;
+const globe = new THREE.Mesh(geometry, material)                             ;
+
+// Improved Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5) ;
+scene.add(ambientLight)                                    ;
+const pointLight = new THREE.PointLight(0xffffff, 1, 100)  ;
+pointLight.position.set(10, 10, 10)                        ;
+scene.add(pointLight)                                      ;
+
+scene.add(globe)       ;
+camera.position.z = 10 ;
+
+function animate() {
+requestAnimationFrame(animate)                                                                                                              ;
+globe.rotation.y += 0.0005                                                                                                                  ;
+globe.scale.set(1 + Math.sin(Date.now() * 0.001) * 0.05, 1 + Math.sin(Date.now() * 0.001) * 0.002, 1 + Math.sin(Date.now() * 0.001) * 0.05) ;
+renderer.render(scene, camera)                                                                                                              ;
+}
+animate()                                                                                                                                   ;
+
+// Dark Mode Observer
+const observer = new MutationObserver(() => {
+const isDark = document.documentElement.classList.contains("dark");
+material.color.setHex(isDark ? 0x9b5de5 : 0x9b5de5)                                          ;
+material.emissive.setHex(isDark ? 0x9b5de5 : 0x9b5de5)                                       ;
+material.opacity = isDark ? 0.3 : 0.05                                                       ;  // Update opacity based on dark mode
+material.needsUpdate = true                                                                  ;             // Ensure changes take effect
+})                                                                                           ;
+observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] }) ;
+
+// Resize Handler
+window.addEventListener("resize", () => {
+camera.aspect = window.innerWidth / window.innerHeight  ;
+camera.updateProjectionMatrix()                         ;
+renderer.setSize(window.innerWidth, window.innerHeight) ;
+})                                                      ;
+</script>
+
+<!-- Background Particle Script -->
+<script is:inline src="/js/bg.js"></script>
+</section>

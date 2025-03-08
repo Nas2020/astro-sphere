@@ -1,136 +1,92 @@
 ---
-import { getCollection } from "astro:content"
-import PageLayout from "@layouts/PageLayout.astro"
-import ArrowCard from "@components/ArrowCard"
-import { SITE } from "@consts"
-import TwinklingStars from "@components/TwinklingStars.astro"
-import MeteorShower from "@components/MeteorShower.astro"
-import AboutContent from "./about/index.astro"
+import { getCollection } from "astro:content";
+import PageLayout from "@layouts/PageLayout.astro";
+import ArrowCard from "@components/ArrowCard";
+import { SITE } from "@consts";
+import TwinklingStars from "@components/TwinklingStars.astro";
+import MeteorShower from "@components/MeteorShower.astro";
+import AboutContent from "./about/index.astro";
+import Hero from "@components/Hero.astro"; // Import the new Hero component
+
 const projects = (await getCollection("projects"))
-.filter(project => !project.data.draft)
-.sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-.slice(0,3)
+  .filter((project) => !project.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
 ---
+
 <PageLayout title="Home" description={SITE.DESCRIPTION}>
-<!-- Light Mode: Particles -->
-<div class='absolute inset-0 block dark:hidden'>
-<div id='particles1' class='fixed inset-0'></div>
-<div id='particles2' class='fixed inset-0'></div>
-<div id='particles3' class='fixed inset-0'></div>
-</div>
+  <!-- Light Mode: Particles -->
+  <div class="absolute inset-0 block dark:hidden">
+    <div id="particles1" class="fixed inset-0"></div>
+    <div id="particles2" class="fixed inset-0"></div>
+    <div id="particles3" class="fixed inset-0"></div>
+  </div>
 
-<!-- Dark Theme: Stars -->
-<div class='absolute inset-0 bg-black hidden dark:block'>
-<div id='stars1' class='fixed inset-0'></div>
-<div id='stars2' class='fixed inset-0'></div>
-<div id='stars3' class='fixed inset-0'></div>
-</div>
+  <!-- Dark Theme: Stars -->
+  <div class="absolute inset-0 bg-black hidden dark:block">
+    <div id="stars1" class="fixed inset-0"></div>
+    <div id="stars2" class="fixed inset-0"></div>
+    <div id="stars3" class="fixed inset-0"></div>
+  </div>
 
-<!-- Dark Theme: Twinkling Stars / Meteors -->
-<div id="galaxy" class="fixed inset-0">
-<div class="hidden dark:block">
-<TwinklingStars/>
-<MeteorShower/>
-</div>
-</div>
+  <!-- Dark Theme: Twinkling Stars / Meteors -->
+  <div id="galaxy" class="fixed inset-0">
+    <div class="hidden dark:block">
+      <TwinklingStars />
+      <MeteorShower />
+    </div>
+  </div>
 
-<script is:inline src="/js/bg.js"></script>
+  <!-- Hero Component -->
+  <Hero />
 
-<!-- HERO -->
-<section class="relative h-screen w-full">
-<div id="planetcont" class='animate absolute inset-0 top-1/4 overflow-hidden'>
-<div id="crescent" class='absolute top-0 left-1/2 -translate-x-1/2 w-[250vw] min-h-[100vh] aspect-square rounded-full p-[1px] bg-gradient-to-b from-black/25 dark:from-white/75 from-0% to-transparent to-5%'>
-<div id="planet" class='w-full h-full bg-white dark:bg-black rounded-full p-[1px] overflow-hidden flex justify-center'>
-<div id="blur" class='w-full h-20 rounded-full bg-neutral-900/25 dark:bg-white/25 blur-3xl'/>
-</div>
-</div>
-</div>
+  <!-- Main Content Container -->
+  <div class="relative bg-white dark:bg-black">
+    <div class="mx-auto max-w-screen-sm p-5 space-y-16">
+      <!-- Project Preview Section -->
+      <section class="animate">
+        <div class="space-y-4">
+          <div
+            class="flex justify-between items-center pb-2 border-b border-black/10 dark:border-white/10"
+          >
+            <h2 class="font-semibold text-lg text-black dark:text-white">
+              Recent Projects
+            </h2>
+            <a
+              href="/projects"
+              class="group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+            >
+              <span
+                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+              >
+                All projects
+              </span>
+            </a>
+          </div>
+          <ul class="space-y-4">
+            {projects.map((project) => (
+              <li>
+                <ArrowCard entry={project} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
 
-<div class="animate absolute h-full w-full flex items-center justify-center">
-<div class='p-5 text-center max-w-2xl'>
-<p class='animated text-lg md:text-xl lg:text-2xl font-semibold opacity-75 mb-2'>
-Hello, We are
-</p>
-<p class='animated text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-black dark:text-white mb-3'>
-LimogiAI Solutions Inc
-</p>
-<p class='animated text-sm md:text-base lg:text-lg opacity-75 mb-6'>
-Creating intelligent solutions for tomorrow's challenges.
-</p>
-</div>
-</div>
-<!-- Add this inside your hero section, just before the closing </section> tag -->
-<div class="absolute bottom-16 left-1/2 -translate-x-1/2">
-  <button 
-    class="flex items-center justify-center h-10 w-10 rounded-full bg-black/10 dark:bg-white/10 backdrop-blur-sm hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300"
-    aria-label="Scroll down"
-    onclick="window.scrollTo({top: window.innerHeight, behavior: 'smooth'})"
-  >
-    <svg class="w-5 h-5 stroke-black dark:stroke-white animate-pulse-down" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <polyline points="6 9 12 15 18 9"></polyline>
-    </svg>
-  </button>
-</div>
-
-<style>
-  @keyframes pulse-down {
-    0%, 100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    50% {
-      transform: translateY(6px);
-      opacity: 0.7;
-    }
-  }
-  
-  .animate-pulse-down {
-    animation: pulse-down 2s ease-in-out infinite;
-  }
-</style>
-</section>
-
-<!-- Main Content Container -->
-<div class="relative bg-white dark:bg-black">
-<div class="mx-auto max-w-screen-sm p-5 space-y-16"> <!-- Consistent spacing -->
-
-<!-- Project Preview Section -->
-<section class="animate">
-<div class="space-y-4">
-<div class="flex justify-between items-center pb-2 border-b border-black/10 dark:border-white/10">
-<h2 class="font-semibold text-lg text-black dark:text-white">
-Recent Projects
-</h2>
-<a href="/projects" class="group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend">
-<span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
-All projects
-</span>
-</a>
-</div>
-<ul class="space-y-4">
-{projects.map((project) => (
-<li>
-<ArrowCard entry={project} />
-</li>
-))}
-</ul>
-</div>
-</section>
-
-<!-- About Section -->
-<section class="animate">
-  <h2 class="font-semibold text-xl md:text-2xl text-black dark:text-white pb-2 border-b border-black/10 dark:border-white/10 mb-4">
-    About Us
-  </h2>
-  
-  <!-- Include the full content from the about page -->
-  <AboutContent isHomePage={true} />
-</section>
-</div>
-</div>
+      <!-- About Section -->
+      <section class="animate">
+        <h2
+          class="font-semibold text-xl md:text-2xl text-black dark:text-white pb-2 border-b border-black/10 dark:border-white/10 mb-4"
+        >
+          About Us
+        </h2>
+        <AboutContent isHomePage={true} />
+      </section>
+    </div>
+  </div>
 </PageLayout>
+
 <script>
-  // Initialize performance settings when the page loads
-  import { initPerformanceSettings } from '../utils/performance-settings';
-  document.addEventListener('DOMContentLoaded', initPerformanceSettings);
+  import { initPerformanceSettings } from "../utils/performance-settings";
+  document.addEventListener("DOMContentLoaded", initPerformanceSettings);
 </script>
